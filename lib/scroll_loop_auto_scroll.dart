@@ -121,17 +121,19 @@ class _ScrollLoopAutoScrollState extends State<ScrollLoopAutoScroll>
   }
 
   animationHandler() async {
-    if (scrollController.position.maxScrollExtent > 0) {
-      shouldScroll.value = true;
+    if (scrollController.hasClients) {
+      if (scrollController.position.maxScrollExtent > 0) {
+        shouldScroll.value = true;
 
-      if (shouldScroll.value && mounted) {
-        animationController.forward().then((_) async {
-          animationController.reset();
+        if (shouldScroll.value && mounted) {
+          animationController.forward().then((_) async {
+            animationController.reset();
 
-          if (shouldScroll.value && mounted) {
-            animationHandler();
-          }
-        });
+            if (shouldScroll.value && mounted) {
+              animationHandler();
+            }
+          });
+        }
       }
     }
   }
